@@ -1,0 +1,25 @@
+
+
+// DOCKER HUB
+
+node {
+    stage("Clone") {
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/metinbor/shared-tools.git']]])
+    }   
+    stage("Build"){
+        sh "docker build -t metinbor/tools . "   // github.com/metinbor/shared-tools.git
+    }
+    //stage("Tagging"){
+        //  sh "docker tag tools:latest ${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/tools:latest"
+    }
+    stage("Authenticate"){
+        sh " cat ~/my_password.txt | docker login --username metinbor --password-stdin "
+    }
+    stage("Push Image"){
+        sh "docker push metinbor/tools"
+    }
+    stage("Email") {
+        sh "echo hello" //"/email"
+    }
+}
+
