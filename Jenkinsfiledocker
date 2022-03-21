@@ -9,8 +9,7 @@ node {
     stage("Build"){
         sh "docker build -t metinbor/tools . "   // github.com/metinbor/shared-tools.git
     }
-    //stage("Tagging"){
-        //  sh "docker tag tools:latest ${AWS_ACCOUNT}.dkr.ecr.us-east-1.amazonaws.com/tools:latest"
+   
     }
     stage("Authenticate"){
         sh " cat ~/my_password.txt | docker login --username metinbor --password-stdin "
@@ -19,7 +18,7 @@ node {
         sh "docker push metinbor/tools"
     }
     stage("Email") {
-        sh "echo hello" //"/email"
+        sh "echo hello"
     }
 }
 
