@@ -1,15 +1,12 @@
 
 
 // DOCKER HUB
-
 node {
     stage("Clone") {
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/metinbor/shared-tools.git']]])
     }   
     stage("Build"){
         sh "docker build -t metinbor/tools . "   // github.com/metinbor/shared-tools.git
-    }
-   
     }
     stage("Authenticate"){
         sh " cat ~/my_password.txt | docker login --username metinbor --password-stdin "
